@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 
 from emailusernames.utils import migrate_usernames
 
@@ -13,4 +13,7 @@ class Command(BaseCommand):
 		"""
 		The migrate_usernames callback
 		"""
-		migrate_usernames()
+		try:
+			migrate_usernames()
+		except Exception, e:
+			raise CommandError(e.message)
